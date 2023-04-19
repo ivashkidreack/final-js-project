@@ -1,5 +1,14 @@
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+
+#video {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: 1;
+}
 .container {
-    background-color: #353336;
     height: 100vh;
     overflow: hidden;
     display: flex;
@@ -7,13 +16,16 @@
     justify-content: center;
 }
 .content {
+    position: absolute;
     padding: 10px;
-    width: 500px;
-    height: 580px;
+    width: 580px;
+    height: 500px;
     background-color: #525053;
+    box-shadow: 5px 3px 5px 0 rgba(252, 169, 169, 0.6);
     box-sizing: border-box;
     box-shadow: 10px;
     border-radius: 8px;
+    z-index: 3;
 }
 .wrapper {
     position: relative;
@@ -23,24 +35,26 @@
     width: 70px;
     height: 70px;
     border: 5px solid white;
-    border-radius: 20px;
+    box-shadow: 5px 10px 10px 0 rgba(252, 169, 169, 0.6);
+    border-radius: 40px;
     position: absolute;
     display: none;
 }
 .score {
     width: 200px;
-    height: 200px;
+    height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 8px;
     background-color: #525053;
     position: absolute;
-    bottom: calc(100% + 24px);
+    bottom: calc(99% + 20px);
     left: calc(50% - 100px);
     font-family: sans-serif;
     font-size: 16px;
     color: #ffffff;
+    box-shadow: 5px 10px 10px 0 rgba(252, 169, 169, 0.6);
 }
 .smile {
     box-sizing: border-box;
@@ -51,3 +65,57 @@
     border: 1px solid transparent;
     background-size: 100%;
 }
+.change__all {
+    position: absolute;
+    top: 20px;
+    right: 100px;
+    background-color: #525053;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-family: 'Lato', sans-serif;
+    color: #ffffff;
+    box-shadow: 5px 10px 10px 0 rgba(252, 169, 169, 0.6);
+    font-size: 20px;
+    z-index: 10;
+}
+.music__container {
+    background-color: #525053;
+    border-radius: 8px;
+    box-shadow: 5px 10px 10px 0 rgba(252, 169, 169, 0.6);
+    display: flex;
+    padding: 10px 30px;
+    position: absolute;
+    margin-top: 20px;
+    margin-left: 10px;
+    z-index: 10;
+}
+.navigation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+  }
+  
+  .action-btn {
+    background-color: #525053;
+    border: 0;
+    border-radius: 10px;
+    color: #adadad;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 10px;
+    margin: 0 10px;
+  }
+  
+  .action-btn.action-btn-big {
+    background-color: #727172;
+    color: #adadad;
+    font-size: 25px;
+    padding: 10px 15px 10px 20px;
+    border-radius: 50%;
+  }
+  
+  .action-btn:focus {
+    outline: 0;
+  }
+  

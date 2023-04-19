@@ -2,9 +2,6 @@ let config = {
 	countRows: 6,
 	countCols: 7,
 
-	offsetBorder: 10,
-	borderRadius: 8,
-		
 	smileSize: 80,
 
 	imagesSmile: ["img/smile1.png", "img/smile2.png", "img/smile3.png", "img/smile4.png", "img/smile5.png", "img/smile6.png", "img/smile7.png", "img/smile8.png"],
@@ -31,11 +28,27 @@ let components = {
 	content : document.querySelector(".content"), 
 	wrapper : document.querySelector(".wrapper"), 
 	cursor : document.querySelector(".cursor"), 
-	score : document.querySelector(".score"), 
+	score : document.querySelector(".score"),
+	btn : document.querySelector(".change__all"),
 	smiles: new Array(),
 }
 
+const musicPlayer = {
+	musicContainer : document.querySelector(".music__container"),
+	playBtn : document.querySelector("#play"),
+	prevBtn : document.querySelector("#prev"),
+	nextBtn : document.querySelector("#next"),
+
+	audio : document.querySelector("#audio"),
+
+	songs : ["audio/bg-music1.mp3", "audio/bg-music2.mp3", "audio/bg-music3.mp3", "audio/bg-music4.mp3", "audio/bg-music5.mp3"],
+	songIndex : 0,
+	currTime : 0
+};
+
 createGrid();
+
+components.btn.addEventListener("click", changeAllSmiles);
 
 function cursorShow () {
 	components.cursor.style.display = "block";
@@ -346,7 +359,7 @@ function placeNewSmiles() {
 	let smilesPlaced = 0;
 
 	for( let i = 0; i < config.countCols; i += 1) {
-		if (components.smiles[0][1] == -1) {
+		if (components.smiles[0][i] == -1) {
 			components.smiles[0][i] = Math.floor(Math.random() *8);
 
 			createSmile(0, i*config.smileSize, 0, i, config.imagesSmile[components.smiles[0][i]]);
@@ -383,4 +396,69 @@ function placeNewSmiles() {
 			player.selectedRow= -1;
 		}
 	}
+};
+
+function changeAllSmiles() {
+	for (let i = 0; i < config.countRows; i += 1) {
+		for (let j = 0; j < config.countCols; j += 1) {
+			document.querySelector( "#" + config.smileIdPrefix + "_" + i + "_" + j ).classList.add( "remove" );
+		}
+	}
+
+	smileFade();
+	createGrid();
+};
+
+
+
+function loadSong(song) {
+	musicPlayer.audio.src = `${song}`;
+	musicPlayer.musicContainer.classList.add("play"); 
+
+	musicPlayer.audio.currentTime = musicPlayer.currTime;
+	musicPlayer.playBtn.querySelector('i.fas').classList.remove("fa-play");
+	musicPlayer.playBtn.querySelector('i.fas').classList.add("fa-pause");
+
+	musicPlayer.audio.play();
+};
+
+function pauseSong() {
+	musicPlayer.musicContainer.classList.remove("play");
+	musicPlayer.currTime = musicPlayer.audio.currentTime;
+	musicPlayer.playBtn.querySelector('i.fas').classList.remove("fa-pause");
+	musicPlayer.playBtn.querySelector('i.fas').classList.add("fa-play");
+
+	musicPlayer.audio.pause();
 }
+
+function playPrevSong() {
+	musicPlayer.songIndex -= 1;
+
+	if(musicPlayer.songIndex < 0) {
+		musicPlayer.songIndex = musicPlayer.songs.length - 1;
+	}
+
+	musicPlayer.currTime = 0;
+	loadSong(musicPlayer.songs[musicPlayer.songIndex]);
+};
+
+function playNextSong() {
+	musicPlayer.songIndex += 1;
+
+	if(musicPlayer.songIndex == musicPlayer.songs.length) {
+		musicPlayer.songIndex = 0;
+	}
+	loadSong(musicPlayer.songs[musicPlayer.songIndex]);
+};
+
+musicPlayer.playBtn.addEventListener("click", () => {
+
+	if(musicPlayer.musicContainer.classList.contains("play")) {
+		pauseSong();
+	} else {
+		loadSong(musicPlayer.songs[musicPlayer.songIndex]);
+	}
+});
+
+musicPlayer.prevBtn.addEventListener('click', playPrevSong);
+musicPlayer.nextBtn.addEventListener('click', playNextSong);
